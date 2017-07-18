@@ -1,5 +1,5 @@
 {
-  "name": "telegraf-session-rethinkdbdash",
+  "name": "telegraf-session-rethinkdb",
   "version": "1.0",
   "description": "RethinkDB (rehinkdbdash port) powered session middleware for Telegraf",
   "main": "lib/session.js",
