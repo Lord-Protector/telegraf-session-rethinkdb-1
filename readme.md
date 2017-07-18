@@ -5,7 +5,7 @@ RethinkDB store-based session middleware for [Telegraf (Telegram bot framework)]
 ## Installation
 
 ```js
-$ npm install @xqd/telegraf-session-rethinkdb --save
+$ npm install Lord-Protector/telegraf-session-rethinkdbdash#master
 ```
 
 ## Example
