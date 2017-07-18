@@ -12,8 +12,10 @@ $ npm install @xqd/telegraf-session-rethinkdb --save
   
 ```js
 const Telegraf = require('telegraf')
-const RethinkSession = require('@xqd/telegraf-session-rethinkdb')
-const r = require('rethinkdb')
+const RethinkSession = require('telegraf-session-rethinkdb')
+const r = require('rethinkdbdash')({
+	db: "test"
+});
 
 const telegraf = new Telegraf(process.env.TOKEN)
 
@@ -22,23 +24,22 @@ const store = {
 	port: process.env.RETHINK_PORT
 }
 
-r.connect(store).then(async (connection) => {
-	let session = new RethinkSession(connection/*, options */)
 
-	await session.setup()
+let session = new RethinkSession(r/*, options */)
 
-	telegraf.use(session.middleware)
+await session.setup()
 
-	telegraf.use((ctx, next) => {
-	  ctx.session.counter = ctx.session.counter || 0
-	  ctx.session.counter++
-	  console.log('->', ctx.session) // -> { counter: 1, id: 'chatId:fromId' }
+telegraf.use(session.middleware)
 
-	  next()
-	})
+telegraf.use((ctx, next) => {
+  ctx.session.counter = ctx.session.counter || 0
+  ctx.session.counter++
+  console.log('->', ctx.session) // -> { counter: 1, id: 'chatId:fromId' }
 
-	telegraf.startPolling()
+  next()
 })
+
+telegraf.startPolling()
 ```
 
 ## API
